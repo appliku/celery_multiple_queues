@@ -1,0 +1,23 @@
+{% extends 'myapp/base.html' %}
+{% block title %}List of Uploads{% endblock %}
+{% block content %}
+    <a href="{% url "contact_upload_create" %}">Upload New File</a>
+    <br>
+    <a href="{% url "contact_generate" %}">Download Fake CSV</a>
+    <br>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>FILE</th>
+            <th>STATUS</th>
+        </tr>
+        {% for object in object_list %}
+            <tr>
+                <td><a href="{{ object.url }}">{{ object.pk }}</a></td>
+                <td>{{ object.file }}</td>
+                <td>{{ object.status }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'myapp/base.html' %}
+{% block title %}Viewing Contacts Upload #{{ object.pk }}{% endblock %}
+
+{% block content %}
+    <h1>{{ object.contact_file.name }}</h1>
+    <h2>Status: {{ object.get_status_display }}</h2>
+    {% if processing_finished %}
+        <h3>Total contacts found: {{ object.contact_set.all.count }}</h3>
+    {% else %}
+        <script>
+            setTimeout(function () {
+                window.location.reload();
+            }, 3000);
+        </script>
+    {% endif %}
+
+    <table>
+        <tr>
+            <th>Email</th>
+            <th>MX Found</th>
+        </tr>
+        {% for contact in object.contact_set.all %}
+            <tr>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.has_mx_records|yesno:"✅,❌,⁇" }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
